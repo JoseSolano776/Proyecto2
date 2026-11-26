@@ -11,10 +11,13 @@ public class Transaccion {
     private Date fecha;
     private CuentaAhorro cuentaAhorro;
 
-    public Transaccion(float monto, char tipo, Date fecha) {
+    public Transaccion(float monto, char tipo, Date fecha, CuentaAhorro cuentaAhorro) {
+        consecutivo++;
+        this.idTransaccion = "T-" + consecutivo;
         this.monto = monto;
         this.tipo = tipo;
         this.fecha = fecha;
+        this.cuentaAhorro = cuentaAhorro;
 
         if (tipo == 'D') {
             cuentaAhorro.deposito(monto);
@@ -22,6 +25,10 @@ public class Transaccion {
             cuentaAhorro.retiro(monto);
         }
 
+    }
+
+    public int getConsecutivo() {
+        return consecutivo;
     }
 
     public String getIdTransaccion() {
@@ -38,6 +45,14 @@ public class Transaccion {
 
     public Date getFecha() {
         return fecha;
+    }
+
+    public CuentaAhorro getCuentaAhorro() {
+        return cuentaAhorro;
+    }
+
+    public void setCuentaAhorro(CuentaAhorro cuentaAhorro) {
+        this.cuentaAhorro = cuentaAhorro;
     }
 
 }

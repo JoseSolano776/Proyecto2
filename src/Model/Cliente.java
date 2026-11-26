@@ -27,6 +27,14 @@ public class Cliente {
         return direccion;
     }
 
+    public void setCedula(String cedula) {
+        this.cedula = cedula;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
     public void setDireccion(String direccion) {
         this.direccion = direccion;
     }

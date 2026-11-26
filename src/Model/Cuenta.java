@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Cuenta {
     
-    private int consecutivo;
+    private static int consecutivo;
     private String numCuenta;
     private char tipoMoneda;
     private Date fechaApertura;
@@ -13,12 +13,11 @@ public class Cuenta {
     public Cuenta() {
     }
 
-    public Cuenta(int consecutivo, String numCuenta, char tipoMoneda, Date fechaApertura) {
-        this.consecutivo = consecutivo;
-        this.numCuenta = numCuenta;
+    public Cuenta(char tipoMoneda, Date fechaApertura, Cliente cliente) {
+        this.consecutivo ++;
         this.tipoMoneda = tipoMoneda;
         this.fechaApertura = fechaApertura;
-        cliente = new Cliente();
+        this.cliente = cliente;
     }
 
     public int getConsecutivo() {
@@ -33,9 +32,16 @@ public class Cuenta {
         return tipoMoneda;
     }
 
-
     public Date getFechaApertura() {
         return fechaApertura;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
     
     

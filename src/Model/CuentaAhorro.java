@@ -9,7 +9,8 @@ public class CuentaAhorro extends Cuenta {
     private float saldo;
     private float tasaInteres;
 
-    public CuentaAhorro(float saldo, float tasaInteres, char tipoMoneda, String cliente) {
+    public CuentaAhorro(float saldo, float tasaInteres, char estado, char tipoMoneda, Cliente cliente) {
+        super('A', new Date(), cliente);
         this.estado = estado;
         this.saldo = saldo;
         this.tasaInteres = tasaInteres;

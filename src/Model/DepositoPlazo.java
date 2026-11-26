@@ -8,8 +8,8 @@ public class DepositoPlazo extends Cuenta{
     private float montoDeposito;
     private float tasaInteresDeposito;
 
-    public DepositoPlazo(int plazoVencimiento, float montoDeposito, float tasaInteresDeposito, int consecutivo, String numCuenta, char tipoMoneda, Date fechaApertura) {
-        super(consecutivo, numCuenta, tipoMoneda, fechaApertura);
+    public DepositoPlazo(int plazoVencimiento, float montoDeposito, float tasaInteresDeposito, char tipoMoneda, Cliente cliente) {
+        super('A', new Date(), cliente);
         this.plazoVencimiento = plazoVencimiento;
         this.montoDeposito = montoDeposito;
         this.tasaInteresDeposito = tasaInteresDeposito;
