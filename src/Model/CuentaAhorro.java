@@ -10,12 +10,19 @@ public class CuentaAhorro extends Cuenta {
     private float tasaInteres;
 
     public CuentaAhorro(float saldo, float tasaInteres, char estado, char tipoMoneda, Cliente cliente) {
-        super('A', new Date(), cliente);
+        super(tipoMoneda, new Date(), cliente); 
         this.estado = estado;
         this.saldo = saldo;
         this.tasaInteres = tasaInteres;
     }
 
+    // Constructor para reconstruir una cuenta desde el archivo
+    public CuentaAhorro(int consecutivo, String numCuenta, float saldo, float tasaInteres, char estado, char tipoMoneda, Date fechaApertura, Cliente cliente) {
+        super(consecutivo, numCuenta, tipoMoneda, fechaApertura, cliente);
+        this.estado = estado;
+        this.saldo = saldo;
+        this.tasaInteres = tasaInteres;
+    }
 
     public char getEstado() {
         return estado;

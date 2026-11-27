@@ -14,6 +14,15 @@ public class DepositoPlazo extends Cuenta{
         this.montoDeposito = montoDeposito;
         this.tasaInteresDeposito = tasaInteresDeposito;
     }
+    
+    // Constructor para reconstruir un depósito desde archivos
+    public DepositoPlazo(int consecutivo, String numCuenta, int plazoVencimiento, float montoDeposito, float tasaInteresDeposito, char tipoMoneda, Date fechaApertura, Cliente cliente) {
+        super(consecutivo, numCuenta, tipoMoneda, fechaApertura, cliente);
+        this.plazoVencimiento = plazoVencimiento;
+        this.montoDeposito = montoDeposito;
+        this.tasaInteresDeposito = tasaInteresDeposito;
+    }
+
 
     public int getPlazoVencimiento() {
         return plazoVencimiento;
