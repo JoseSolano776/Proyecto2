@@ -36,7 +36,7 @@ public class TransaccionController {
            
         }
         
-        Transaccion transaccion = new Transaccion(monto,tipo,new Date()cuenta);
+        Transaccion transaccion = new Transaccion(monto,tipo,new Date(),cuenta);
             
           transacciones [contador] = transaccion;
           contador++;
