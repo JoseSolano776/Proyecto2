@@ -30,9 +30,9 @@ public class ArchivoCliente {
         try {
             String[] registros = ArchivoUtil.leer(archivo);
             for (String registro : registros) {
-                String[] d = registro.split("\t", -1);
-                if (d.length == 3 && d[0].equals(cedula)) {
-                    return new Cliente(d[0], d[1], d[2]);
+                String[] dato = registro.split("\t", -1);
+                if (dato.length == 3 && dato[0].equals(cedula)) {
+                    return new Cliente(dato[0], dato[1], dato[2]);
                 }
             }
         } catch (IOException | IllegalArgumentException e) {
@@ -47,9 +47,9 @@ public class ArchivoCliente {
         try {
             String[] registros = ArchivoUtil.leer(archivo);
             for (String registro : registros) {
-                String[] d = registro.split("\t", -1);
-                if (d.length == 3 && contador < resultado.length) {
-                    resultado[contador++] = new Cliente(d[0], d[1], d[2]);
+                String[] dato = registro.split("\t", -1);
+                if (dato.length == 3 && contador < resultado.length) {
+                    resultado[contador++] = new Cliente(dato[0], dato[1], dato[2]);
                 }
             }
         } catch (IOException | IllegalArgumentException e) {
@@ -70,8 +70,8 @@ public class ArchivoCliente {
             String[] registros = ArchivoUtil.leer(archivo);
             boolean encontrado = false;
             for (int i = 0; i < registros.length; i++) {
-                String[] d = registros[i].split("\t", -1);
-                if (d.length == 3 && d[0].equals(cliente.getCedula())) {
+                String[] dato = registros[i].split("\t", -1);
+                if (dato.length == 3 && dato[0].equals(cliente.getCedula())) {
                     registros[i] = ArchivoUtil.codificar(cliente.getCedula()) + "\t" + ArchivoUtil.codificar(cliente.getNombre()) + "\t" + ArchivoUtil.codificar(cliente.getDireccion());
                     encontrado = true;
                     break;
@@ -93,8 +93,8 @@ public class ArchivoCliente {
             int contador = 0;
             boolean eliminado = false;
             for (String registro : registros) {
-                String[] d = registro.split("\t", -1);
-                if (d.length == 3 && d[0].equals(cedula)) {
+                String[] dato = registro.split("\t", -1);
+                if (dato.length == 3 && dato[0].equals(cedula)) {
                     eliminado = true;
                 } else {
                     temporal[contador++] = registro;

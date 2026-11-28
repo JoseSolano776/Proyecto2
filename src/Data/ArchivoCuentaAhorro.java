@@ -27,27 +27,60 @@ public class ArchivoCuentaAhorro {
     }
 
     public boolean existe(String numeroCuenta) {
-        return buscar(numeroCuenta) != null;
+        return buscarPorNumeroCuenta(numeroCuenta) != null;
     }
 
-    public CuentaAhorro buscar(String numeroCuenta) {
+    public CuentaAhorro buscarPorNumeroCuenta(String numeroCuenta) {
         try {
             String[] registros = ArchivoUtil.leer(archivo);
             for (String registro : registros) {
-                String[] d = registro.split("\t", -1);
-                if (d.length == 8 && d[1].equals(numeroCuenta)) {
-                    Cliente cliente = archivoCliente.buscar(d[4]);
+                String[] dato = registro.split("\t", -1);
+                if (dato.length == 8 && dato[1].equals(numeroCuenta)) {
+                    Cliente cliente = archivoCliente.buscar(dato[4]);
                     if (cliente == null) {
                         return null;
                     }
-                    return new CuentaAhorro(Integer.parseInt(d[0]), d[1], Float.parseFloat(d[6]),
-                            Float.parseFloat(d[7]), d[5].charAt(0), d[2].charAt(0), new Date(Long.parseLong(d[3])), cliente);
+                    return new CuentaAhorro(Integer.parseInt(dato[0]), dato[1], Float.parseFloat(dato[6]),
+                            Float.parseFloat(dato[7]), dato[5].charAt(0), dato[2].charAt(0), new Date(Long.parseLong(dato[3])), cliente);
                 }
             }
         } catch (IOException | IllegalArgumentException e) {
             return null;
         }
         return null;
+    }
+    
+    public CuentaAhorro[] buscar(String cedula) {
+        CuentaAhorro[] temporal = new CuentaAhorro[100];
+        int contador = 0;
+
+        try {
+            for (String registro : ArchivoUtil.leer(archivo)) {
+                String[] dato = registro.split("\t", -1);
+
+                if (dato.length == 8 && dato[4].equals(cedula) && contador < temporal.length) {
+                    Cliente cliente = archivoCliente.buscar(dato[4]);
+
+                    if (cliente != null) {
+                        temporal[contador++] = new CuentaAhorro(
+                                Integer.parseInt(dato[0]), dato[1],
+                                Float.parseFloat(dato[6]), Float.parseFloat(dato[7]),
+                                dato[5].charAt(0), dato[2].charAt(0),
+                                new Date(Long.parseLong(dato[3])), cliente);
+                    }
+                }
+            }
+        } catch (IOException | IllegalArgumentException e) {
+            return new CuentaAhorro[0];
+        }
+
+        CuentaAhorro[] resultado = new CuentaAhorro[contador];
+
+        for (int i = 0; i < contador; i++) {
+            resultado[i] = temporal[i];
+        }
+
+        return resultado;
     }
 
     public CuentaAhorro[] consultarTodos() {
@@ -56,12 +89,12 @@ public class ArchivoCuentaAhorro {
         try {
             String[] registros = ArchivoUtil.leer(archivo);
             for (String registro : registros) {
-                String[] d = registro.split("\t", -1);
-                if (d.length == 8 && contador < temporal.length) {
-                    Cliente cliente = archivoCliente.buscar(d[4]);
+                String[] dato = registro.split("\t", -1);
+                if (dato.length == 8 && contador < temporal.length) {
+                    Cliente cliente = archivoCliente.buscar(dato[4]);
                     if (cliente != null) {
-                        temporal[contador++] = new CuentaAhorro(Integer.parseInt(d[0]), d[1],
-                                Float.parseFloat(d[6]), Float.parseFloat(d[7]), d[5].charAt(0), d[2].charAt(0), new Date(Long.parseLong(d[3])), cliente);
+                        temporal[contador++] = new CuentaAhorro(Integer.parseInt(dato[0]), dato[1],
+                                Float.parseFloat(dato[6]), Float.parseFloat(dato[7]), dato[5].charAt(0), dato[2].charAt(0), new Date(Long.parseLong(dato[3])), cliente);
                     }
                 }
             }
@@ -83,9 +116,9 @@ public class ArchivoCuentaAhorro {
             String[] registros = ArchivoUtil.leer(archivo);
             boolean encontrado = false;
             for (int i = 0; i < registros.length; i++) {
-                String[] d = registros[i].split("\t", -1);
-                if (d.length == 8 && d[1].equals(cuenta.getNumCuenta())) {
-                    registros[i] = d[0] + "\t" + d[1] + "\t" + d[2] + "\t" + d[3] + "\t" + d[4] + "\t"
+                String[] dato = registros[i].split("\t", -1);
+                if (dato.length == 8 && dato[1].equals(cuenta.getNumCuenta())) {
+                    registros[i] = dato[0] + "\t" + dato[1] + "\t" + dato[2] + "\t" + dato[3] + "\t" + dato[4] + "\t"
                             + cuenta.getEstado() + "\t" + cuenta.getSaldo() + "\t" + cuenta.getTasaInteres();
                     encontrado = true;
                     break;
@@ -106,8 +139,8 @@ public class ArchivoCuentaAhorro {
             int contador = 0;
             boolean eliminado = false;
             for (String registro : registros) {
-                String[] d = registro.split("\t", -1);
-                if (d.length == 8 && d[1].equals(numeroCuenta)) {
+                String[] dato = registro.split("\t", -1);
+                if (dato.length == 8 && dato[1].equals(numeroCuenta)) {
                     eliminado = true;
                 } else {
                     temporal[contador++] = registro;

@@ -11,7 +11,7 @@ public class ArchivoTransaccion {
     private final ArchivoCuentaAhorro archivoCuenta = new ArchivoCuentaAhorro();
 
     public boolean registrar(Transaccion transaccion) {
-        if (transaccion == null || transaccion.getCuentaAhorro() == null || transaccion.getIdTransaccion() == null || existe(transaccion.getIdTransaccion()) || archivoCuenta.buscar(transaccion.getCuentaAhorro().getNumCuenta()) == null || transaccion.getMonto() <= 0 || (transaccion.getTipo() != 'D' && transaccion.getTipo() != 'R')) {
+        if (transaccion == null || transaccion.getCuentaAhorro() == null || transaccion.getIdTransaccion() == null || existe(transaccion.getIdTransaccion()) || archivoCuenta.buscarPorNumeroCuenta(transaccion.getCuentaAhorro().getNumCuenta()) == null || transaccion.getMonto() <= 0 || (transaccion.getTipo() != 'D' && transaccion.getTipo() != 'R')) {
             return false;
         }
         try {
@@ -31,7 +31,7 @@ public class ArchivoTransaccion {
             for (String registro : ArchivoUtil.leer(archivo)) {
                 String[] d = registro.split("\t", -1);
                 if (d.length == 6 && d[1].equals(idTransaccion)) {
-                    CuentaAhorro cuenta = archivoCuenta.buscar(d[5]);
+                    CuentaAhorro cuenta = archivoCuenta.buscarPorNumeroCuenta(d[5]);
                     if (cuenta == null) {
                         return null;
                     }
@@ -47,7 +47,7 @@ public class ArchivoTransaccion {
     public Transaccion[] consultarPorCuenta(String numeroCuenta) {
         Transaccion[] temporal = new Transaccion[200];
         int contador = 0;
-        CuentaAhorro cuenta = archivoCuenta.buscar(numeroCuenta);
+        CuentaAhorro cuenta = archivoCuenta.buscarPorNumeroCuenta(numeroCuenta);
         if (cuenta == null) {
             return new Transaccion[0];
         }
